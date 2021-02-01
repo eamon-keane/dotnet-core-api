@@ -21,7 +21,16 @@ namespace TodoApi.Controllers
             _context = context;
             if (_context.Vouchers.Count() == 0)
             {
-                _context.Vouchers.Add(new Voucher("test"));
+                var voucher = new Voucher("First");
+
+                _context.Vouchers.Add(voucher);
+
+                var voucherId = voucher.Id;
+
+                string voucherCode = ConvertIdToVoucherCode(voucherId);
+
+                voucher.VoucherCode = voucherCode;
+
                 _context.SaveChanges();
             }
         }
@@ -36,7 +45,7 @@ namespace TodoApi.Controllers
 
         // POST: api/Voucher
         [HttpPost]
-        public async Task<ActionResult<Voucher>> PostVoucher(string name)
+        public async Task<ActionResult<Voucher>> CreateVoucher(string name)
         {
 
             var voucher = new Voucher(name);
@@ -66,6 +75,25 @@ namespace TodoApi.Controllers
             {
                 return NotFound();
             }
+
+            return voucher;
+        }
+
+        // Post: api/Voucher/5
+        [HttpPost("{voucherCode}")]
+        public async Task<ActionResult<Voucher>> UseVoucher(string voucherCode)
+        {
+
+            var voucher = await _context.Vouchers.FirstOrDefaultAsync(v => v.VoucherCode == voucherCode && v.IsValid == true);
+
+            if (voucher == null)
+            {
+                return NotFound();
+            }
+
+            voucher.IsValid = false;
+
+            await _context.SaveChangesAsync();
 
             return voucher;
         }

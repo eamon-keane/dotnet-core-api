@@ -9,6 +9,7 @@ namespace TodoApi.Models
         {
             IsValid = true;
             Name = name;
+            CreationDateTimeUTC = DateTime.UtcNow;
         }
         [Key]
         public Guid Id { get; set; }
@@ -20,5 +21,7 @@ namespace TodoApi.Models
         public string UsedById { get; set; }
 
         public string Name {get;set;}
+
+        public DateTime CreationDateTimeUTC {get;set;}
     }
 }

@@ -10,7 +10,9 @@ products:
 - azure-app-service
 ---
 
-# ASP.NET Core API sample for Azure App Service
+# Simple Web API to show how vouchers or coupons can be created with dotnet and Entity Framework Core 
+
+
 
 This is a sample application that you can use to follow along with the tutorial at 
 [Run a RESTful API with CORS in Azure App Service](https://docs.microsoft.com/azure/app-service/app-service-web-tutorial-rest-api). 
